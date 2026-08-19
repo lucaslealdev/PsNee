@@ -136,6 +136,59 @@
     root.style.scrollBehavior = prevBehavior;
   }
 
+  // A single fix (right after translations, or on window "load") isn't
+  // enough on a slow connection: "load" doesn't even wait for loading="lazy"
+  // images, and remaining images can keep decoding and resizing the page for
+  // a long, unpredictable time after that. Rather than guess a fixed settle
+  // duration (which either fights the user too long or gives up too early
+  // and misses a late shift), react directly to the page's height actually
+  // changing, for as long as it keeps changing.
+  function settleHashScroll() {
+    if (!window.location.hash) return;
+
+    var guardEvents = ["wheel", "touchstart", "keydown"];
+    var observer = null;
+    var pollTimer = null;
+    var safetyTimer = null;
+
+    function stop() {
+      if (safetyTimer) clearTimeout(safetyTimer);
+      if (pollTimer) clearInterval(pollTimer);
+      if (observer) observer.disconnect();
+      guardEvents.forEach(function (evt) {
+        window.removeEventListener(evt, stop);
+      });
+    }
+
+    // Never fight a user who's already scrolling on their own — stop
+    // re-snapping the instant they touch the wheel/trackpad/keyboard/screen.
+    guardEvents.forEach(function (evt) {
+      window.addEventListener(evt, stop, { passive: true });
+    });
+
+    // Safety net in case something keeps resizing the page indefinitely.
+    safetyTimer = setTimeout(stop, 20000);
+
+    if (typeof ResizeObserver === "function") {
+      observer = new ResizeObserver(function () {
+        fixHashScroll();
+      });
+      observer.observe(document.body);
+    }
+
+    // Also poll on a plain interval, not only as a fallback: ResizeObserver
+    // (like requestAnimationFrame) can be deferred for a backgrounded/hidden
+    // tab in some browsers, while a setInterval still fires there (browsers
+    // just clamp it to roughly once a second), so this is what actually
+    // guarantees convergence for a link opened in a tab that loads unfocused.
+    var ticks = 0;
+    pollTimer = setInterval(function () {
+      fixHashScroll();
+      ticks++;
+      if (ticks >= 60) stop(); // safety cap alongside safetyTimer above
+    }, 300);
+  }
+
   window.psneeI18n = { setLang: setLang, detectLang: detectLang };
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -154,10 +207,13 @@
     }
 
     setLang(detectLang()).then(function () {
-      requestAnimationFrame(fixHashScroll);
+      // No requestAnimationFrame here on purpose: rAF callbacks are paused
+      // entirely for backgrounded/hidden tabs (e.g. a link opened in a new
+      // tab that isn't focused yet while it loads), which would silently
+      // delay this indefinitely. Reading layout geometry below forces a
+      // synchronous reflow instead, so it doesn't need to wait for a frame.
+      fixHashScroll();
+      settleHashScroll();
     });
-    // Images finishing (board/BIOS photos) can also grow the page after the
-    // text-driven fix above already ran — correct once more when they're in.
-    window.addEventListener("load", fixHashScroll);
   });
 })();

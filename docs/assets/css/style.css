@@ -55,7 +55,13 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  /* Let our own JS own the post-load anchor correction (see i18n.js) instead
+     of the browser also auto-adjusting scroll as async content resizes things. */
+  overflow-anchor: none;
+}
 
 body {
   margin: 0;
