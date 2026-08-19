@@ -34,12 +34,22 @@ sketch flashed onto the chip that goes inside the console.
 - `docs/` — static, framework-free GitHub Pages site (English/Portuguese/Spanish) documenting how
   PSNee works, the Arduino Nano flashing guide, and one installation page per PS1 motherboard
   (PU-7/8/16/18/20/22/23, PM-41, PM-41 (2)). Set the repo's Pages source to `main` / `/docs` to
-  publish it. All pages share `assets/css/style.css` and `assets/js/i18n.js`; page text lives in
+  publish it. The HTML pages (`index.html`, `devices/*.html`, `boards/*.html`) are **generated,
+  not hand-edited** — content/structure lives in `docs/tools/gen_site.py` (board data, page
+  templates, the `fig()` helper); edit that script and rerun `python3 docs/tools/gen_site.py`
+  rather than editing the `.html` output directly, or edits will be lost on the next regen. All
+  pages share `assets/css/style.css` and `assets/js/i18n.js`; page text lives in
   `assets/i18n/{en,pt,es}.json` under `data-i18n="a.b.c"` keys (see `docs/assets/js/i18n.js` for the
   lookup/array/HTML-attr conventions) — edit the JSON, not hardcoded strings, and keep all three
   language files structurally identical. Board/Arduino/BIOS photos are re-compressed copies of the
   root `images/` originals (via Pillow, JPEG ~1400px) living under `docs/assets/images/`; if source
-  images change, regenerate rather than copying the multi-MB originals in directly.
+  images change, regenerate rather than copying the multi-MB originals in directly. Every content
+  image also has a small `*-thumb.*` sibling (via `python3 docs/tools/gen_thumbs.py`, ~640px) that
+  `fig()` uses for the inline preview — the lightbox zoom and "open in new tab" link still point at
+  the full-resolution file, so a page never downloads a 1400px photo just to show a small preview.
+  `HAS_THUMB` in `gen_site.py` and `CONTENT_IMAGES` in `gen_thumbs.py` must stay in sync; a few
+  already-tiny line-art diagrams (PSNee pinout, LED/switch wiring) are deliberately excluded since
+  downsizing them further doesn't help.
 
 ## Configuring and building
 
