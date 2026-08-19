@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "title_suffix": "PSNee"
+  },
+  "nav": {
+    "home": "Início",
+    "devices": "Dispositivos",
+    "install": "Instalação",
+    "wiki": "Wiki completa",
+    "github": "GitHub"
+  },
+  "common": {
+    "signal": "Sinal",
+    "nanoPin": "Pino do Nano",
+    "notes": "Notas",
+    "aboutPoints": "Sobre os pontos de solda",
+    "installTips": "Dicas de instalação",
+    "modelsCovered": "Consoles que usam esta placa",
+    "revisions": "Números de revisão de placa conhecidos",
+    "biosPinout": "Fotos de referência do chip de BIOS",
+    "backToInstall": "← Voltar aos guias de instalação",
+    "seeNanoGuide": "Veja o guia completo de gravação do Arduino Nano →",
+    "warning": "Aviso",
+    "important": "Importante",
+    "note": "Nota",
+    "biosRelevantYes": "Alguns consoles com esta placa exigem o patch de BIOS (gravação via ISP).",
+    "biosRelevantNo": "Nenhum console com esta placa precisa do patch de BIOS — a gravação simples via USB já é suficiente.",
+    "qAll": "Todos",
+    "qMost": "A maioria",
+    "qSomeEarly": "Alguns dos primeiros",
+    "qLater": "Mais recentes",
+    "qEarlier": "Mais antigos",
+    "noteAlways": "Sempre necessário",
+    "noteReset": "Apenas para consoles japoneses SCPH-xxx0 (patch de BIOS)",
+    "noteBiosAx": "Apenas quando o patch de BIOS é necessário (linha de endereço)",
+    "noteBiosAy": "Apenas no SCPH-1000 / SCPH-3000 (patch de BIOS em dois estágios)",
+    "noteBiosDx": "Apenas quando o patch de BIOS é necessário (linha de dados)",
+    "noteSwitch": "Opcional: interruptor para desativar o patch de BIOS na hora",
+    "noteLed": "Opcional: LED indicador de atividade de injeção (D13 é o LED embutido do Nano)",
+    "zoomHint": "Toque ou clique para ampliar",
+    "openInNewTab": "Abrir imagem em nova aba ↗"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Firmware open-source para modchip de PS1",
+      "title": "PSNee",
+      "subtitle": "Firmware para um pequeno chip AVR que remove o bloqueio regional de discos do PlayStation 1 — assim, discos importados e cópias de backup simplesmente rodam, sem nenhuma outra alteração de hardware no console.",
+      "cta1": "Ver dispositivos suportados",
+      "cta2": "Guias de instalação"
+    },
+    "what": {
+      "title": "O que o PSNee faz",
+      "p1": "PSNee é um firmware que roda em um pequeno microcontrolador AVR — uma placa Arduino, ou um chip AVR avulso — conectado ao controlador de CD-ROM do PS1. Ele observa os dados de subcanal que o drive lê do disco e, no instante em que reconhece a área de verificação regional, injeta a string de licença SCEx de aparência autêntica que o console espera, como se um disco da região correta tivesse sido inserido.",
+      "p2": "Como a injeção é disparada pelo tempo real do disco em vez de um atraso fixo, ela permanece sincronizada com o drive e não atrapalha o funcionamento normal do jogo. Além de desbloquear a verificação regional do disco, o PSNee pode opcionalmente corrigir uma segunda verificação regional, independente, que existe dentro do próprio chip de BIOS do console — necessária em alguns modelos."
+    },
+    "how": {
+      "title": "Como funciona",
+      "regionTitle": "1. Proteção regional do disco (injeção de SCEx)",
+      "regionText": "Todo disco de PS1 carrega uma pequena string SCEx codificada perto do início da área de dados — uma espécie de assinatura regional que o controlador de CD procura antes de permitir que um jogo rode. O PSNee escuta as linhas SQCK/SUBQ que o drive usa para ler essa área, reconhece o padrão com um pequeno contador de histerese (para que um laser desgastado ou um disco sujo não causem um disparo falso) e, por um breve instante, controla a própria linha DATA para injetar o código SCEx correspondente. O console nunca percebe a diferença.",
+      "biosTitle": "2. Patch regional de BIOS (apenas alguns modelos)",
+      "biosText": "Um pequeno grupo de modelos — consoles japoneses e o PS One europeu (SCPH-102) — executa uma segunda verificação regional, independente, embutida no próprio chip de BIOS. Para esses, o PSNee pode monitorar o barramento de endereços da BIOS durante a inicialização e, em um pulso de endereço contado com precisão, sobrescrever brevemente o barramento de dados para desviar a BIOS dessa verificação. Isso precisa acontecer nas primeiras frações de segundo após ligar o console, e é por isso que esses modelos precisam ser gravados com um programador ISP em vez do bootloader normal do Arduino — o próprio atraso de inicialização do bootloader já é longo o bastante para perder essa janela por completo."
+    },
+    "videoNote": {
+      "title": "Nota sobre o sinal de vídeo",
+      "text": "O PSNee não converte entre sinais de vídeo PAL e NTSC — ele apenas remove o bloqueio regional. Jogar um título de outra região ainda pode gerar uma imagem distorcida ou descolorida em alguns consoles e TVs. Modelos europeus do SCPH-5502 ao SCPH-9002 costumam exibir NTSC corretamente; o PS One SCPH-102 precisa do patch de BIOS para uma reprodução NTSC correta."
+    },
+    "hardware": {
+      "title": "Microcontroladores suportados",
+      "intro": "O PSNee tem como alvo chips AVR comuns, mais facilmente encontrados em placas da marca Arduino. O chip escolhido determina se o recurso de patch de BIOS está disponível.",
+      "colMcu": "Microcontrolador",
+      "colBoards": "Placas comuns",
+      "colBios": "Patch de BIOS",
+      "atmega328": "ATmega328 / 168 (16 MHz)",
+      "atmega328boards": "Uno, Nano, Pro Mini",
+      "atmega32u4": "ATmega32U4 (16 MHz)",
+      "atmega32u4boards": "Leonardo, Micro, Pro Micro",
+      "attiny": "ATtiny25 / 45 / 85 (8 MHz)",
+      "attinyboards": "Chip avulso, sem bootloader",
+      "yes": "Suportado",
+      "no": "Não suportado"
+    },
+    "devices": {
+      "title": "Dispositivos",
+      "intro": "Instruções passo a passo de configuração e gravação de firmware, uma página para cada placa suportada.",
+      "nanoTitle": "Arduino Nano",
+      "nanoText": "A placa mais fácil para começar: barata, comum e gravável por USB simples em todo console que não precisa do patch de BIOS.",
+      "nanoCta": "Abrir o guia do Arduino Nano"
+    },
+    "install": {
+      "title": "Guias de instalação na placa-mãe do PS1",
+      "intro": "Todo PlayStation 1 saiu de fábrica com uma entre várias revisões de placa-mãe, cada uma com seus próprios pontos de solda. Abra seu console, encontre o código da placa impresso nela (algo como PU-18 ou PM-41) e abra o guia correspondente abaixo.",
+      "viewGuide": "Ver guia de instalação"
+    },
+    "footerCta": {
+      "title": "Ainda não sabe qual é a sua placa?",
+      "text": "Você geralmente consegue ter uma boa ideia a partir do número do modelo impresso embaixo do console (como SCPH-7502), e depois confirmar abrindo o gabinete — o código da placa vem serigrafado diretamente na PCB.",
+      "cta": "Ver guias de instalação"
+    }
+  },
+  "device": {
+    "nano": {
+      "crumb": "Dispositivos",
+      "title": "Arduino Nano",
+      "intro": "O Arduino Nano é uma das placas mais fáceis para montar um modchip PSNee: é pequeno, barato, fácil de encontrar e — para consoles que não precisam do patch de BIOS — pode ser gravado por USB simples, sem nenhum hardware extra. Ele usa a família de microcontroladores ATmega328, então suporta todos os recursos do PSNee, incluindo o patch de BIOS quando gravado por um programador ISP.",
+      "wiringTitle": "Conexão dos sinais",
+      "wiringText": "Estes são os nomes de sinais do PSNee mapeados para os pinos do Arduino Nano (ATmega328). Conecte os pinos relacionados ao patch de BIOS (AX, AY, DX, RESET) apenas se o modelo do seu console exigir o patch de BIOS — confira o guia de instalação da sua placa de PS1 específica.",
+      "usbTitle": "Gravação via USB (sem patch de BIOS)",
+      "usbIntro": "Use este método para consoles americanos (SCPH-xxx1), asiáticos (SCPH-xxx3) e europeus Fat (SCPH-1002 até SCPH-9002) — nenhum deles precisa do patch de BIOS.",
+      "usbSteps": [
+        "Abra <code>PSNee/PSNee.ino</code> na Arduino IDE.",
+        "Perto do início do arquivo, remova o comentário de exatamente uma linha <code>SCPH_xxxx</code> correspondente ao seu console — escolha apenas uma que não exija patch de BIOS.",
+        "Em <code>PSNee/settings.h</code>, revise <code>REQUEST_INJECT_TRIGGER</code>, <code>REQUEST_INJECT_GAP</code>, <code>LED_RUN</code> e <code>DEBUG_SERIAL_MONITOR</code> — os valores padrão funcionam para a maioria das montagens.",
+        "Na IDE, selecione <strong>Board → Arduino Nano</strong> e a variante de processador correspondente (bootloader antigo ou novo), escolha a porta correta e depois clique em <strong>Upload</strong>.",
+        "Conecte o Nano ao console seguindo a tabela de sinais acima e o guia de instalação da sua placa-mãe de PS1 específica."
+      ],
+      "ispTitle": "Gravação via ISP (patch de BIOS necessário)",
+      "ispIntro": "Consoles japoneses (SCPH-xxx0) e o PS One europeu (SCPH-102) impõem uma segunda verificação regional dentro do chip de BIOS. Esse patch precisa rodar nos primeiríssimos instantes após ligar o console — antes mesmo do bootloader do Arduino terminar de iniciar — então esses modelos precisam ser programados pelo header ISP em vez de USB.",
+      "ispSteps": [
+        "Conecte um programador ISP (por exemplo, outro Arduino rodando o sketch <em>ArduinoISP</em>, ou um USBasp) ao header ICSP do Nano.",
+        "Na Arduino IDE, selecione <strong>Tools → Programmer</strong> e escolha seu programador ISP.",
+        "Remova o comentário do modelo <code>SCPH_xxxx</code> correspondente à BIOS do seu console em <code>PSNee.ino</code> — a versão da BIOS importa mais do que o número SCPH exato, então confira os comentários de CRC ao lado de cada opção.",
+        "Use <strong>Sketch → Upload Using Programmer</strong>. Isso também (re)grava os fuses e remove o bootloader."
+      ],
+      "fusesTitle": "Fuses",
+      "fusesText": "A implementação atual do patch de BIOS é tolerante o suficiente em relação a timing que, normalmente, um ajuste específico de fuses não é necessário. O único ajuste que vale a pena conferir é o Brown-out Detector (BOD) — configure-o para 2.7V.",
+      "extrasTitle": "Extras opcionais",
+      "ledTitle": "LED de status",
+      "ledText": "O LED embutido no pino 13 do Nano já pisca a cada injeção quando <code>LED_RUN</code> está habilitado. Se preferir ter o LED em outro lugar do gabinete, conecte um LED externo seguindo este diagrama:",
+      "switchTitle": "Interruptor para desativar o patch de BIOS",
+      "switchText": "Em consoles onde o patch de BIOS ocasionalmente interfere com memory cards (principalmente unidades SCPH-7000 mais antigas), você pode adicionar um interruptor físico para desativar o patch quando quiser — habilite <code>PATCH_SWITCHE</code> em <code>settings.h</code> e conecte-o como mostrado:",
+      "cautionTitle": "Não regrave um console conectado",
+      "cautionText": "Nunca conecte o Nano ao USB para regravá-lo enquanto ele ainda estiver ligado a um console energizado. A tensão que retorna pelos fios de sinal até o chip controlador do console pode travá-lo e interromper a operação do CD. Desconecte o console, ou desligue-o, antes de regravar."
+    }
+  },
+  "board": {
+    "pu7": {
+      "name": "PU-7",
+      "intro": "A primeiríssima placa-mãe de PlayStation 1, encontrada no SCPH-1000 japonês original, além de algumas unidades iniciais do SCPH-1001, SCPH-1002, SCPH-3000 e SCPH-3500. É a única placa de PS1 com pinos de saída S-Video além da saída de vídeo RCA padrão — a própria porta S-Video só foi montada no SCPH-1000 japonês, mas as trilhas continuam presentes em toda placa PU-7.",
+      "aboutPoints": "Em consoles SCPH-xxx1 e SCPH-xxx2, todos os pontos de conexão ficam na parte de trás da placa e o ponto RESET pode ser ignorado. Na variante japonesa SCPH-xxx0, você também vai precisar do ponto RESET e dos pontos do patch de BIOS.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "Use um multímetro para procurar pontos alternativos de VCC e GND mais próximos de onde você pretende posicionar o chip, para uma instalação mais limpa.",
+        "Posicione o chip perto do meio de onde todos os fios precisam chegar, para minimizar o comprimento dos fios."
+      ]
+    },
+    "pu8": {
+      "name": "PU-8",
+      "intro": "Um dos primeiros designs de placa, reconhecível pelas portas de vídeo composto RCA na parte de trás. A maioria das unidades SCPH-1001 dos EUA veio com essa placa, junto de muitos consoles japoneses SCPH-3000, SCPH-3500 e SCPH-5000. Existem duas revisões distintas — antiga e recente — cada uma com seu próprio diagrama de instalação; compare o número de série impresso na sua placa com a lista de revisões abaixo para diferenciá-las.",
+      "aboutPoints": "Em consoles SCPH-xxx1 e SCPH-xxx2, todos os pontos de conexão ficam na parte de trás da placa e o ponto RESET pode ser ignorado. Na variante japonesa SCPH-xxx0, você também vai precisar do ponto RESET e dos pontos do patch de BIOS.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "Use um multímetro para procurar pontos alternativos de VCC e GND mais próximos de onde você pretende posicionar o chip, para uma instalação mais limpa.",
+        "Posicione o chip perto do meio de onde todos os fios precisam chegar, para minimizar o comprimento dos fios."
+      ]
+    },
+    "pu16": {
+      "name": "PU-16",
+      "intro": "Uma placa bem incomum: encontrada apenas no SCPH-5903, vendido no mercado asiático, o único modelo de PS1 que também consegue reproduzir Video CDs, e o único gabinete de PS1 já produzido na cor branca em vez de cinza. Relatos indicam que a Sony fabricou apenas cerca de 10.000 unidades, vendidas principalmente em Hong Kong.",
+      "specialNote": "Instalar o PsNee nesta placa desativa a reprodução de Video CD. O firmware tem um modo de filtragem dedicado ao SCPH-5903 que distingue discos de jogo de VCDs ao analisar os dados de SUBQ, mas o próprio drive não consegue mais ler VCDs depois que o mod é conectado.",
+      "aboutPoints": "O SCPH-5903 é um console asiático NTSC-J, então não exige o patch de BIOS — a injeção padrão via USB já é suficiente.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "Use um multímetro para procurar pontos alternativos de VCC e GND mais próximos de onde você pretende posicionar o chip, para uma instalação mais limpa.",
+        "Posicione o chip perto do meio de onde todos os fios precisam chegar, para minimizar o comprimento dos fios."
+      ]
+    },
+    "pu18": {
+      "name": "PU-18",
+      "intro": "Usada em uma ampla gama de consoles, desde as séries SCPH-5000 e SCPH-5500 até algumas unidades iniciais do SCPH-7000 e SCPH-7500.",
+      "aboutPoints": "Em consoles SCPH-xxx1 e SCPH-xxx2, todos os pontos de conexão ficam na parte de trás da placa e o ponto RESET pode ser ignorado. Na variante japonesa SCPH-xxx0, você também vai precisar do ponto RESET e dos pontos do patch de BIOS. Todos os pontos são relativamente fáceis de soldar nesta placa.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "Um bom lugar para o chip é embaixo da legenda impressa na placa, perto do meio de tudo.",
+        "Use um multímetro para procurar pontos alternativos de VCC e GND mais próximos de onde você pretende posicionar o chip, para uma instalação mais limpa."
+      ]
+    },
+    "pu20": {
+      "name": "PU-20",
+      "intro": "Usada exclusivamente na série de consoles SCPH-7000.",
+      "aboutPoints": "Em consoles SCPH-xxx1 e SCPH-xxx2, você pode ignorar o ponto RESET. Na variante japonesa SCPH-xxx0, você também vai precisar do ponto RESET e dos pontos do patch de BIOS. Todos os pontos são relativamente fáceis de soldar nesta placa.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "O pino DATA pode ser complicado de soldar — evite excesso de solda, ou você corre o risco de fazer uma ponte com um pino vizinho."
+      ]
+    },
+    "pu22": {
+      "name": "PU-22",
+      "intro": "Encontrada em consoles mais recentes cujos lasers têm mais chance de ainda estarem em bom estado, esta placa é usada principalmente na série SCPH-7500 e ainda traz as portas serial e paralela na parte de trás.",
+      "aboutPoints": "Em consoles SCPH-xxx1 e SCPH-xxx2, você pode ignorar o ponto RESET. Na variante japonesa SCPH-xxx0, você também vai precisar do ponto RESET e dos pontos do patch de BIOS. Tenha cuidado ao soldar perto do capacitor ligado a VCC/GND — o ponto GND pode facilmente fazer ponte com as ilhas vizinhas.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "Use um multímetro para procurar pontos alternativos de VCC e GND mais próximos de onde você pretende posicionar o chip, para uma instalação mais limpa.",
+        "Um bom lugar para o chip é em cima do chip controlador de CD, entre SUBQ, SQCK, GND e VCC.",
+        "Cuidado com respingos de solda ao dessoldar a blindagem metálica na parte de cima da placa — recolocá-la não é estritamente necessário, mas é uma boa prática."
+      ]
+    },
+    "pu23": {
+      "name": "PU-23",
+      "intro": "A última placa da série PU do design original, usada na série SCPH-9000. A Sony removeu a porta paralela de E/S na parte de trás e reduziu bastante o tamanho da placa em comparação com as revisões anteriores.",
+      "aboutPoints": "Em consoles SCPH-xxx1 e SCPH-xxx2, você pode ignorar o ponto RESET. Na variante japonesa SCPH-xxx0, você também vai precisar do ponto RESET e dos pontos do patch de BIOS. Todos os pontos são relativamente fáceis de soldar nesta placa.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "No DATA, tome cuidado para não fazer ponte com o resistor vizinho.",
+        "Não passe solda demais no SQCK, ou você vai fazer ponte entre os pinos do chip.",
+        "Para fios que passam por vias: passe um fio fino 30 AWG pelo furo e aqueça o fio e o furo juntos enquanto adiciona solda.",
+        "Um bom lugar para o chip é em cima do chip controlador de CD, acima de SUBQ e SQCK."
+      ]
+    },
+    "pm41": {
+      "name": "PM-41",
+      "intro": "Encontrada no PS One slim (SCPH-10x), lançado perto do fim da vida útil do PS1. Algumas unidades do PS One usam a placa PM-41 (2), bem parecida, em vez desta — a revisão exata vem impressa na própria placa, então abra o console para confirmar antes de começar a fiação.",
+      "aboutPoints": "No SCPH-101 e no SCPH-103, você pode ignorar completamente os pontos de BIOS. No SCPH-100 e no SCPH-102 — que exigem o patch de BIOS — você vai precisar usá-los. Todos os pontos são relativamente fáceis de soldar nesta placa.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "Se estiver usando um ATtinyX5, ou se o seu console for um SCPH-101, ignore completamente os pontos A18 e D2 (BIOS).",
+        "Use um multímetro para procurar pontos alternativos de VCC e GND mais próximos de onde você pretende posicionar o chip, para uma instalação mais limpa.",
+        "Para fios que passam por vias: passe um fio fino 30 AWG pelo furo e aqueça o fio e o furo juntos enquanto adiciona solda.",
+        "No DATA, tome cuidado para não fazer ponte de solda com um componente próximo, nem derrubar o capacitor da placa."
+      ]
+    },
+    "pm412": {
+      "name": "PM-41 (2)",
+      "intro": "Uma versão revisada da PM-41, lançada mais tarde na produção do PS One. Os pontos de fiação diferem ligeiramente da PM-41 original, então certifique-se de estar seguindo o diagrama da revisão de placa que você realmente tem.",
+      "aboutPoints": "No SCPH-101 e no SCPH-103, você pode ignorar completamente os pontos de BIOS. No SCPH-100 e no SCPH-102 — que exigem o patch de BIOS — você vai precisar usá-los.",
+      "tips": [
+        "Corte os fios o mais curtos e diretos possível.",
+        "Não é preciso conectar os pinos 1 e 2 do chip ATtinyX5 — basta dessoldar esse fio, se estiver presente.",
+        "Use um multímetro para procurar pontos alternativos de VCC e GND mais próximos de onde você pretende posicionar o chip, para uma instalação mais limpa.",
+        "Pode haver pontos alternativos mais fáceis de alcançar para SQCK e SUBQ do que os pontos padrão.",
+        "Tenha cuidado extra ao soldar SQCK e SUBQ — é fácil fazer ponte entre pinos adjacentes.",
+        "Tenha cuidado com a conexão DATA — é fácil derrubar o capacitor da placa sem querer."
+      ]
+    }
+  },
+  "footer": {
+    "disclaimer": "PSNee é um projeto não oficial, feito por fãs, compartilhado para fins educacionais e de arquivamento. Este site é uma documentação independente e não tem nenhuma afiliação com a Sony Interactive Entertainment.",
+    "sourceLink": "Código-fonte",
+    "wikiLink": "Wiki completa",
+    "license": "Disponibilizado em domínio público (Unlicense)."
+  }
+}

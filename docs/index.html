@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PSNee</title>
+<meta name="description" content="PSNee: open-source firmware that removes the PS1 disc region lock.">
+<link rel="icon" type="image/png" href="assets/images/brand/favicon.png">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-i18n-title="home.hero.title">
+<header class="site-header">
+  <div class="nav-row">
+    <a class="brand" href="index.html"><img src="assets/images/brand/logo.png" alt="PSNee logo"><span>PSNee</span></a>
+    <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+    <nav class="nav-links">
+      <a href="index.html" data-i18n="nav.home" class="current">Home</a>
+      <a href="devices/arduino-nano.html" data-i18n="nav.devices">Devices</a>
+      <a href="index.html#install" data-i18n="nav.install">Installation</a>
+      <a href="https://github.com/kalymos/PsNee/wiki" data-i18n="nav.wiki" target="_blank" rel="noopener">Full wiki</a>
+      <a href="https://github.com/lucaslealdev/PsNee" data-i18n="nav.github" target="_blank" rel="noopener">GitHub</a>
+      <div class="lang-switch">
+        <button data-lang="en">EN</button>
+        <button data-lang="pt">PT</button>
+        <button data-lang="es">ES</button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow" data-i18n="home.hero.eyebrow">Open-source PS1 modchip firmware</span>
+    <h1 data-i18n="home.hero.title">PSNee</h1>
+    <p class="lead" data-i18n="home.hero.subtitle">Firmware that removes the PS1's disc region lock.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="devices/arduino-nano.html" data-i18n="home.hero.cta1">See supported devices</a>
+      <a class="btn btn-secondary" href="#install" data-i18n="home.hero.cta2">Installation guides</a>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <h2 data-i18n="home.what.title">What PSNee does</h2>
+  <div class="two-col">
+    <p class="lead" data-i18n="home.what.p1"></p>
+    <p data-i18n="home.what.p2"></p>
+  </div>
+</section>
+
+<section class="container">
+  <h2 data-i18n="home.how.title">How it works</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3 data-i18n="home.how.regionTitle"></h3>
+      <p data-i18n="home.how.regionText"></p>
+    </div>
+    <div class="card">
+      <h3 data-i18n="home.how.biosTitle"></h3>
+      <p data-i18n="home.how.biosText"></p>
+    </div>
+  </div>
+  <div class="callout callout-warn">
+    <span class="callout-title" data-i18n="home.videoNote.title">Video signal note</span>
+    <p data-i18n="home.videoNote.text"></p>
+  </div>
+</section>
+
+<section class="container">
+  <h2 data-i18n="home.hardware.title">Supported microcontrollers</h2>
+  <p class="section-intro" data-i18n="home.hardware.intro"></p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="home.hardware.colMcu">MCU</th>
+          <th data-i18n="home.hardware.colBoards">Boards</th>
+          <th data-i18n="home.hardware.colBios">BIOS patch</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td data-i18n="home.hardware.atmega328"></td><td data-i18n="home.hardware.atmega328boards"></td><td><span class="badge badge-yes" data-i18n="home.hardware.yes"></span></td></tr>
+        <tr><td data-i18n="home.hardware.atmega32u4"></td><td data-i18n="home.hardware.atmega32u4boards"></td><td><span class="badge badge-yes" data-i18n="home.hardware.yes"></span></td></tr>
+        <tr><td data-i18n="home.hardware.attiny"></td><td data-i18n="home.hardware.attinyboards"></td><td><span class="badge badge-no" data-i18n="home.hardware.no"></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container" id="devices">
+  <h2 data-i18n="home.devices.title">Devices</h2>
+  <p class="section-intro" data-i18n="home.devices.intro"></p>
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-tag">ATmega328</span>
+      <h3 data-i18n="home.devices.nanoTitle">Arduino Nano</h3>
+      <p data-i18n="home.devices.nanoText"></p>
+      <a class="card-link" href="devices/arduino-nano.html" data-i18n="home.devices.nanoCta">Open guide &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="container" id="install">
+  <h2 data-i18n="home.install.title">PS1 motherboard installation guides</h2>
+  <p class="section-intro" data-i18n="home.install.intro"></p>
+  <div class="card-grid">
+      <a class="card board-card" href="boards/pu-7.html">
+        <img src="assets/images/boards/pu-7.jpg" alt="PU-7 motherboard" loading="lazy">
+        <h3>PU-7</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+      <a class="card board-card" href="boards/pu-8.html">
+        <img src="assets/images/boards/pu-8-early.jpg" alt="PU-8 motherboard" loading="lazy">
+        <h3>PU-8</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+      <a class="card board-card" href="boards/pu-16.html">
+        <img src="assets/images/boards/pu-16.jpg" alt="PU-16 motherboard" loading="lazy">
+        <h3>PU-16</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+      <a class="card board-card" href="boards/pu-18.html">
+        <img src="assets/images/boards/pu-18.jpg" alt="PU-18 motherboard" loading="lazy">
+        <h3>PU-18</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+      <a class="card board-card" href="boards/pu-20.html">
+        <img src="assets/images/boards/pu-20.jpg" alt="PU-20 motherboard" loading="lazy">
+        <h3>PU-20</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+      <a class="card board-card" href="boards/pu-22.html">
+        <img src="assets/images/boards/pu-22.jpg" alt="PU-22 motherboard" loading="lazy">
+        <h3>PU-22</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+      <a class="card board-card" href="boards/pu-23.html">
+        <img src="assets/images/boards/pu-23.jpg" alt="PU-23 motherboard" loading="lazy">
+        <h3>PU-23</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+      <a class="card board-card" href="boards/pm-41.html">
+        <img src="assets/images/boards/pm-41.jpg" alt="PM-41 motherboard" loading="lazy">
+        <h3>PM-41</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+      <a class="card board-card" href="boards/pm-41-2.html">
+        <img src="assets/images/boards/pm-41-2.jpg" alt="PM-41 (2) motherboard" loading="lazy">
+        <h3>PM-41 (2)</h3>
+        <span class="card-link" data-i18n="home.install.viewGuide">View installation guide &rarr;</span>
+      </a>
+  </div>
+</section>
+
+<section class="container">
+  <div class="callout" style="text-align:center">
+    <h3 style="margin-top:0" data-i18n="home.footerCta.title"></h3>
+    <p data-i18n="home.footerCta.text"></p>
+    <a class="btn btn-secondary" href="#install" data-i18n="home.footerCta.cta"></a>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p class="footer-disclaimer" data-i18n="footer.disclaimer">PSNee is an unofficial, fan-made project.</p>
+  </div>
+  <div class="container">
+    <span>PSNee &middot; <span data-i18n="footer.license">Public domain.</span></span>
+    <div class="footer-links">
+      <a href="https://github.com/lucaslealdev/PsNee" data-i18n="footer.sourceLink" target="_blank" rel="noopener">Source code</a>
+      <a href="https://github.com/kalymos/PsNee/wiki" data-i18n="footer.wikiLink" target="_blank" rel="noopener">Full wiki</a>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/i18n.js"></script>
+</body>
+</html>

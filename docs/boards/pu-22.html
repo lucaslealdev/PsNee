@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PSNee</title>
+<meta name="description" content="PsNee modchip installation guide for the PS1 PU-22 motherboard.">
+<link rel="icon" type="image/png" href="../assets/images/brand/favicon.png">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css">
+</head>
+<body data-i18n-title="board.pu22.name">
+<header class="site-header">
+  <div class="nav-row">
+    <a class="brand" href="../index.html"><img src="../assets/images/brand/logo.png" alt="PSNee logo"><span>PSNee</span></a>
+    <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+    <nav class="nav-links">
+      <a href="../index.html" data-i18n="nav.home">Home</a>
+      <a href="../devices/arduino-nano.html" data-i18n="nav.devices">Devices</a>
+      <a href="../index.html#install" data-i18n="nav.install" class="current">Installation</a>
+      <a href="https://github.com/kalymos/PsNee/wiki" data-i18n="nav.wiki" target="_blank" rel="noopener">Full wiki</a>
+      <a href="https://github.com/lucaslealdev/PsNee" data-i18n="nav.github" target="_blank" rel="noopener">GitHub</a>
+      <div class="lang-switch">
+        <button data-lang="en">EN</button>
+        <button data-lang="pt">PT</button>
+        <button data-lang="es">ES</button>
+      </div>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="container">
+  <span class="crumb"><a href="../index.html#install" data-i18n="common.backToInstall">&larr; Back to installation guides</a></span>
+  <h1>PU-22</h1>
+  <p class="lead" data-i18n="board.pu22.intro"></p>
+  <span class="badge badge-yes" data-i18n="common.biosRelevantYes"></span>
+</section>
+
+<section class="container">
+  <div class="two-col">
+    <figure>
+      <a class="zoom-link" href="../assets/images/boards/pu-22.jpg" target="_blank" rel="noreferrer" data-pswp-width="1400" data-pswp-height="911" data-i18n-attr="title:common.zoomHint">
+        <img src="../assets/images/boards/pu-22.jpg" alt="PU-22" loading="lazy">
+      </a>
+      <figcaption>PU-22</figcaption>
+      <div class="figure-links"><a href="../assets/images/boards/pu-22.jpg" target="_blank" rel="noreferrer" data-i18n="common.openInNewTab">Open image in new tab &#8599;</a></div>
+    </figure>
+    <figure>
+      <a class="zoom-link" href="../assets/images/arduino/nano.jpg" target="_blank" rel="noreferrer" data-pswp-width="900" data-pswp-height="1200" data-i18n-attr="title:common.zoomHint">
+        <img src="../assets/images/arduino/nano.jpg" alt="Arduino Nano board" loading="lazy">
+      </a>
+      <figcaption>Arduino Nano</figcaption>
+      <div class="figure-links"><a href="../assets/images/arduino/nano.jpg" target="_blank" rel="noreferrer" data-i18n="common.openInNewTab">Open image in new tab &#8599;</a></div>
+    </figure>
+  </div>
+</section>
+
+<section class="container">
+  <h2 data-i18n="common.modelsCovered"></h2>
+  <ul class="model-list">
+        <li><span data-i18n="common.qAll"></span> SCPH-7500</li>
+        <li><span data-i18n="common.qMost"></span> SCPH-7501</li>
+        <li><span data-i18n="common.qAll"></span> SCPH-7502</li>
+        <li><span data-i18n="common.qAll"></span> SCPH-7503</li>
+        <li><span data-i18n="common.qSomeEarly"></span> SCPH-9000</li>
+        <li><span data-i18n="common.qSomeEarly"></span> SCPH-9001</li>
+        <li><span data-i18n="common.qSomeEarly"></span> SCPH-9002</li>
+        <li><span data-i18n="common.qSomeEarly"></span> SCPH-9003</li>
+  </ul>
+</section>
+
+<section class="container">
+  <h2 data-i18n="common.aboutPoints"></h2>
+  <p data-i18n="board.pu22.aboutPoints"></p>
+</section>
+
+<section class="container">
+  <h2 data-i18n="common.installTips"></h2>
+  <ol class="steps" data-i18n="board.pu22.tips"></ol>
+</section>
+
+<section class="container">
+  <h2 data-i18n="common.biosPinout"></h2>
+  <div class="card-grid">
+      <figure>
+        <a class="zoom-link" href="../assets/images/bios/32p-scph-7000-100.jpg" target="_blank" rel="noreferrer" data-pswp-width="1200" data-pswp-height="1015" data-i18n-attr="title:common.zoomHint">
+          <img src="../assets/images/bios/32p-scph-7000-100.jpg" alt="32-pin BIOS · SCPH-7000 → SCPH-100 family" loading="lazy">
+        </a>
+        <figcaption>32-pin BIOS · SCPH-7000 → SCPH-100 family</figcaption>
+        <div class="figure-links"><a href="../assets/images/bios/32p-scph-7000-100.jpg" target="_blank" rel="noreferrer" data-i18n="common.openInNewTab">Open image in new tab &#8599;</a></div>
+      </figure>
+  </div>
+</section>
+
+<section class="container">
+  <h2 data-i18n="common.revisions"></h2>
+  <ul class="revision-list">
+        <li>1-674-858-11</li>
+        <li>1-674-858-21</li>
+        <li>1-674-858-31</li>
+        <li>1-674-858-41</li>
+        <li>1-674-858-51</li>
+  </ul>
+</section>
+
+<section class="container">
+  <div class="callout">
+    <p><a href="../devices/arduino-nano.html" data-i18n="common.seeNanoGuide"></a></p>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p class="footer-disclaimer" data-i18n="footer.disclaimer">PSNee is an unofficial, fan-made project.</p>
+  </div>
+  <div class="container">
+    <span>PSNee &middot; <span data-i18n="footer.license">Public domain.</span></span>
+    <div class="footer-links">
+      <a href="https://github.com/lucaslealdev/PsNee" data-i18n="footer.sourceLink" target="_blank" rel="noopener">Source code</a>
+      <a href="https://github.com/kalymos/PsNee/wiki" data-i18n="footer.wikiLink" target="_blank" rel="noopener">Full wiki</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/i18n.js"></script>
+<script type="module">
+  import PhotoSwipeLightbox from "https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe-lightbox.esm.js";
+  var lightbox = new PhotoSwipeLightbox({
+    gallery: "main",
+    children: "a.zoom-link",
+    initialZoomLevel: "fit",
+    secondaryZoomLevel: 2,
+    maxZoomLevel: 4,
+    pswpModule: () => import("https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.esm.js")
+  });
+  lightbox.init();
+</script>
+</body>
+</html>

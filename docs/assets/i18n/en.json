@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "title_suffix": "PSNee"
+  },
+  "nav": {
+    "home": "Home",
+    "devices": "Devices",
+    "install": "Installation",
+    "wiki": "Full wiki",
+    "github": "GitHub"
+  },
+  "common": {
+    "signal": "Signal",
+    "nanoPin": "Nano pin",
+    "notes": "Notes",
+    "aboutPoints": "About the solder points",
+    "installTips": "Installation tips",
+    "modelsCovered": "Consoles that use this board",
+    "revisions": "Known board revision numbers",
+    "biosPinout": "BIOS chip reference photos",
+    "backToInstall": "← Back to installation guides",
+    "seeNanoGuide": "See the full Arduino Nano flashing guide →",
+    "warning": "Warning",
+    "important": "Important",
+    "note": "Note",
+    "biosRelevantYes": "Some consoles on this board require the BIOS patch (ISP flashing).",
+    "biosRelevantNo": "No console on this board needs the BIOS patch — plain USB flashing is enough.",
+    "qAll": "All",
+    "qMost": "Most",
+    "qSomeEarly": "Some early",
+    "qLater": "Later",
+    "qEarlier": "Earlier",
+    "noteAlways": "Always required",
+    "noteReset": "Only for Japanese SCPH-xxx0 consoles (BIOS patch)",
+    "noteBiosAx": "Only when the BIOS patch is required (address line)",
+    "noteBiosAy": "Only on SCPH-1000 / SCPH-3000 (two-stage BIOS patch)",
+    "noteBiosDx": "Only when the BIOS patch is required (data line)",
+    "noteSwitch": "Optional: on-the-fly BIOS patch bypass switch",
+    "noteLed": "Optional: injection activity LED (D13 is the Nano's built-in LED)",
+    "zoomHint": "Tap or click to zoom",
+    "openInNewTab": "Open image in new tab ↗"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Open-source PS1 modchip firmware",
+      "title": "PSNee",
+      "subtitle": "Firmware for a small AVR chip that removes the PlayStation 1's disc region lock — so import and backup discs just play, with no other hardware changes to the console.",
+      "cta1": "See supported devices",
+      "cta2": "Installation guides"
+    },
+    "what": {
+      "title": "What PSNee does",
+      "p1": "PSNee is firmware that runs on a small AVR microcontroller — an Arduino board, or a bare AVR chip — wired into the PS1's CD-ROM controller. It watches the subchannel data the drive reads from the disc and, the instant it recognizes the region-check area, injects the authentic-looking SCEx license string the console expects, as if a disc from the right region had been inserted.",
+      "p2": "Because the injection is triggered by real disc timing instead of a fixed delay, it stays in sync with the drive and doesn't get in the way of normal gameplay. On top of unlocking the disc region check, PSNee can optionally patch a second, independent region check that lives inside the console's own BIOS chip — required on some models."
+    },
+    "how": {
+      "title": "How it works",
+      "regionTitle": "1. Disc region protection (SCEx injection)",
+      "regionText": "Every PS1 disc carries a short SCEx string encoded near the start of the data area — a kind of regional signature the CD controller looks for before it will spin up a game. PSNee listens to the SQCK/SUBQ lines the drive uses to read that area, recognizes the pattern with a small hysteresis counter (so a worn laser or a dirty disc can't cause a false trigger), and briefly drives the DATA line itself to inject the matching SCEx code. The console never notices the difference.",
+      "biosTitle": "2. BIOS region patch (some models only)",
+      "biosText": "A handful of models — Japanese consoles and the European PS One (SCPH-102) — run a second, independent region check baked into the BIOS chip itself. For those, PSNee can watch the BIOS address bus during boot and, on a precisely counted address pulse, briefly override the data bus to steer the BIOS past that check. This has to happen in the first fraction of a second after power-on, which is why these models must be flashed with an ISP programmer instead of the normal Arduino bootloader — the bootloader's own start-up delay is long enough to miss the window entirely."
+    },
+    "videoNote": {
+      "title": "Video signal note",
+      "text": "PSNee does not convert between PAL and NTSC video signals — it only removes the region lock. Playing a game from a different region can still produce a distorted or discolored picture on some consoles and TVs. European models from SCPH-5502 to SCPH-9002 typically display NTSC correctly; the SCPH-102 PS One needs the BIOS patch for correct NTSC playback."
+    },
+    "hardware": {
+      "title": "Supported microcontrollers",
+      "intro": "PSNee targets common AVR chips, most easily found on Arduino-branded boards. The chip you pick determines whether the BIOS patch feature is available.",
+      "colMcu": "Microcontroller",
+      "colBoards": "Common boards",
+      "colBios": "BIOS patch",
+      "atmega328": "ATmega328 / 168 (16 MHz)",
+      "atmega328boards": "Uno, Nano, Pro Mini",
+      "atmega32u4": "ATmega32U4 (16 MHz)",
+      "atmega32u4boards": "Leonardo, Micro, Pro Micro",
+      "attiny": "ATtiny25 / 45 / 85 (8 MHz)",
+      "attinyboards": "Bare chip, no bootloader",
+      "yes": "Supported",
+      "no": "Not supported"
+    },
+    "devices": {
+      "title": "Devices",
+      "intro": "Step-by-step firmware configuration and flashing instructions, one page per supported board.",
+      "nanoTitle": "Arduino Nano",
+      "nanoText": "The easiest board to start with: cheap, common, and flashable over plain USB for every console that doesn't need the BIOS patch.",
+      "nanoCta": "Open the Arduino Nano guide"
+    },
+    "install": {
+      "title": "PS1 motherboard installation guides",
+      "intro": "Every PlayStation 1 shipped with one of several motherboard revisions, each with its own solder points. Open your console, find the board code printed on it (something like PU-18 or PM-41), and open the matching guide below.",
+      "viewGuide": "View installation guide"
+    },
+    "footerCta": {
+      "title": "Don't know your board yet?",
+      "text": "You can usually narrow it down from the model number printed under your console (like SCPH-7502), then confirm by opening the case — the board code is silkscreened directly on the PCB.",
+      "cta": "Browse installation guides"
+    }
+  },
+  "device": {
+    "nano": {
+      "crumb": "Devices",
+      "title": "Arduino Nano",
+      "intro": "The Arduino Nano is one of the easiest boards to build a PSNee modchip around: it's small, cheap, widely available, and — for consoles that don't need the BIOS patch — can be flashed over plain USB with no extra hardware. It uses the ATmega328 microcontroller family, so it supports every PSNee feature, including the BIOS patch when flashed through an ISP programmer.",
+      "wiringTitle": "Signal wiring",
+      "wiringText": "These are the PSNee signal names mapped to Arduino Nano pins (ATmega328). Only wire the BIOS-patch-related pins (AX, AY, DX, RESET) if your console model requires the BIOS patch — check the installation guide for your specific PS1 board.",
+      "usbTitle": "Flashing over USB (no BIOS patch)",
+      "usbIntro": "Use this method for American (SCPH-xxx1), Asian (SCPH-xxx3), and European Fat (SCPH-1002 through SCPH-9002) consoles — none of these require the BIOS patch.",
+      "usbSteps": [
+        "Open <code>PSNee/PSNee.ino</code> in the Arduino IDE.",
+        "Near the top of the file, uncomment exactly one <code>SCPH_xxxx</code> line matching your console — only pick one that doesn't require a BIOS patch.",
+        "In <code>PSNee/settings.h</code>, review <code>REQUEST_INJECT_TRIGGER</code>, <code>REQUEST_INJECT_GAP</code>, <code>LED_RUN</code> and <code>DEBUG_SERIAL_MONITOR</code> — the defaults work for most builds.",
+        "In the IDE, select <strong>Board → Arduino Nano</strong> and the matching processor variant (old or new bootloader), pick the correct port, then <strong>Upload</strong>.",
+        "Wire the Nano to the console following the signal table above and the installation guide for your specific PS1 motherboard."
+      ],
+      "ispTitle": "Flashing via ISP (BIOS patch required)",
+      "ispIntro": "Japanese consoles (SCPH-xxx0) and the European PS One (SCPH-102) enforce a second region check inside the BIOS chip. That patch has to run within the very first moments after power-on — before the Arduino bootloader would even finish starting up — so these models must be programmed through the ISP header instead of USB.",
+      "ispSteps": [
+        "Connect an ISP programmer (for example another Arduino running the <em>ArduinoISP</em> sketch, or a USBasp) to the Nano's ICSP header.",
+        "In the Arduino IDE, select <strong>Tools → Programmer</strong> and pick your ISP programmer.",
+        "Uncomment the <code>SCPH_xxxx</code> model matching your console's BIOS in <code>PSNee.ino</code> — BIOS version matters more than the exact SCPH number, so check the CRC comments next to each option.",
+        "Use <strong>Sketch → Upload Using Programmer</strong>. This also (re)writes the fuses and removes the bootloader."
+      ],
+      "fusesTitle": "Fuses",
+      "fusesText": "The current BIOS-patch implementation is timing-tolerant enough that specific fuse tuning usually isn't needed. The one setting worth double-checking is the Brown-out Detector (BOD) — set it to 2.7V.",
+      "extrasTitle": "Optional extras",
+      "ledTitle": "Status LED",
+      "ledText": "The Nano's built-in pin-13 LED already blinks on every injection when <code>LED_RUN</code> is enabled. If you'd rather have the LED somewhere else on the case, wire an external one following this diagram:",
+      "switchTitle": "BIOS patch bypass switch",
+      "switchText": "On consoles where the BIOS patch occasionally interferes with memory cards (notably early SCPH-7000 units), you can add a physical switch to disable the patch on demand — enable <code>PATCH_SWITCHE</code> in <code>settings.h</code> and wire it as shown:",
+      "cautionTitle": "Don't reflash a connected console",
+      "cautionText": "Never plug the Nano into USB to reprogram it while it's still wired into a powered-on console. Voltage fed back through the signal wires into the console's controller chip can stun it and halt CD operation. Disconnect the console, or power it off, before reflashing."
+    }
+  },
+  "board": {
+    "pu7": {
+      "name": "PU-7",
+      "intro": "The very first PlayStation 1 motherboard, found in the original Japanese SCPH-1000 as well as some early SCPH-1001, SCPH-1002, SCPH-3000, and SCPH-3500 units. It's the only PS1 board with S-Video output pins alongside the standard RCA video output — the S-Video port itself was only ever populated on the Japanese SCPH-1000, but the pads remain on every PU-7 board.",
+      "aboutPoints": "On SCPH-xxx1 and SCPH-xxx2 consoles, every connection point is on the back of the board and the RESET point can be skipped. On the Japanese SCPH-xxx0 variant you'll also need the RESET point and the BIOS patch points.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "Probe around with a multimeter for alternative VCC and GND points closer to where you plan to place the chip, for a cleaner install.",
+        "Position the chip near the middle of where all the wires need to go, to minimize wire length."
+      ]
+    },
+    "pu8": {
+      "name": "PU-8",
+      "intro": "One of the earlier board designs, recognizable by the RCA composite video ports on the back. Most US SCPH-1001 units shipped with this board, alongside many Japanese SCPH-3000, SCPH-3500, and SCPH-5000 consoles. Two distinct revisions exist — early and late — each with its own installation diagram; compare the serial number printed on your board against the revision list below to tell them apart.",
+      "aboutPoints": "On SCPH-xxx1 and SCPH-xxx2 consoles, every connection point is on the back of the board and the RESET point can be skipped. On the Japanese SCPH-xxx0 variant you'll also need the RESET point and the BIOS patch points.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "Probe around with a multimeter for alternative VCC and GND points closer to where you plan to place the chip, for a cleaner install.",
+        "Position the chip near the middle of where all the wires need to go, to minimize wire length."
+      ]
+    },
+    "pu16": {
+      "name": "PU-16",
+      "intro": "A very unusual board: found only in the Asian-market SCPH-5903, the only PS1 model that can also play Video CDs, and the only PS1 shell ever produced in white instead of grey. Sony reportedly made only around 10,000 of these, sold primarily in Hong Kong.",
+      "specialNote": "Installing PsNee on this board disables Video CD playback. The firmware has a dedicated SCPH-5903 filtering mode that tells game discs apart from VCDs while sniffing the SUBQ data, but the drive itself can no longer read VCDs once the mod is wired in.",
+      "aboutPoints": "The SCPH-5903 is an Asian NTSC-J console, so it doesn't require the BIOS patch — standard USB injection is enough.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "Probe around with a multimeter for alternative VCC and GND points closer to where you plan to place the chip, for a cleaner install.",
+        "Position the chip near the middle of where all the wires need to go, to minimize wire length."
+      ]
+    },
+    "pu18": {
+      "name": "PU-18",
+      "intro": "Used across a wide range of consoles, from the SCPH-5000 and SCPH-5500 series up to some early SCPH-7000 and SCPH-7500 units.",
+      "aboutPoints": "On SCPH-xxx1 and SCPH-xxx2 consoles, every connection point is on the back of the board and the RESET point can be skipped. On the Japanese SCPH-xxx0 variant you'll also need the RESET point and the BIOS patch points. All points are fairly easy to solder on this board.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "A good spot for the chip is underneath the board's printed legend, towards the middle of everything.",
+        "Probe around with a multimeter for alternative VCC and GND points closer to where you plan to place the chip, for a cleaner install."
+      ]
+    },
+    "pu20": {
+      "name": "PU-20",
+      "intro": "Used exclusively on the SCPH-7000 series of consoles.",
+      "aboutPoints": "On SCPH-xxx1 and SCPH-xxx2 consoles you can skip the RESET point. On the Japanese SCPH-xxx0 variant you'll also need the RESET point and the BIOS patch points. All points are fairly easy to solder on this board.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "The DATA pin can be tricky to solder — avoid excess solder or you risk bridging it to an adjacent pin."
+      ]
+    },
+    "pu22": {
+      "name": "PU-22",
+      "intro": "Found in newer consoles whose lasers are more likely to still be in good shape, this board is used primarily on the SCPH-7500 series and still carries both the serial and parallel ports on the back.",
+      "aboutPoints": "On SCPH-xxx1 and SCPH-xxx2 consoles you can skip the RESET point. On the Japanese SCPH-xxx0 variant you'll also need the RESET point and the BIOS patch points. Be careful when soldering near the capacitor connected to VCC/GND — the GND point can easily bridge to nearby pads.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "Probe around with a multimeter for alternative VCC and GND points closer to where you plan to place the chip, for a cleaner install.",
+        "A good spot for the chip is on top of the CD controller chip, between SUBQ, SQCK, GND and VCC.",
+        "Watch for solder splatter when desoldering the metal shield on top of the board — putting it back on isn't strictly necessary, but it's good practice."
+      ]
+    },
+    "pu23": {
+      "name": "PU-23",
+      "intro": "The last PU-series board of the original design, used on the SCPH-9000 series. Sony removed the parallel I/O port on the back and significantly shrank the board compared to earlier revisions.",
+      "aboutPoints": "On SCPH-xxx1 and SCPH-xxx2 consoles you can skip the RESET point. On the Japanese SCPH-xxx0 variant you'll also need the RESET point and the BIOS patch points. All points are fairly easy to solder on this board.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "For DATA, be careful not to bridge the connection to the neighboring resistor.",
+        "Don't over-solder SQCK, or you'll bridge the pins on the chip.",
+        "For wires that go through vias: feed a thin 30 AWG wire through the hole, then heat both wire and hole together while adding solder.",
+        "A good spot for the chip is on top of the CD controller chip, above SUBQ and SQCK."
+      ]
+    },
+    "pm41": {
+      "name": "PM-41",
+      "intro": "Found in the slim PS One (SCPH-10x), released towards the end of the PS1's life. Some PS One units use the closely related PM-41 (2) board instead — the exact revision is printed on the board itself, so open the console to confirm before you start wiring.",
+      "aboutPoints": "On SCPH-101 and SCPH-103 you can ignore the BIOS points entirely. On SCPH-100 and SCPH-102 — which both require the BIOS patch — you'll need to use them. All points are fairly easy to solder on this board.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "If you're using an ATtinyX5, or your console is a SCPH-101, ignore the A18 and D2 (BIOS) points entirely.",
+        "Probe around with a multimeter for alternative VCC and GND points closer to where you plan to place the chip, for a cleaner install.",
+        "For wires that go through vias: feed a thin 30 AWG wire through the hole, then heat both wire and hole together while adding solder.",
+        "For DATA, be careful not to bridge solder to a nearby component, or knock the capacitor off the board."
+      ]
+    },
+    "pm412": {
+      "name": "PM-41 (2)",
+      "intro": "A revised version of the PM-41, released later in PS One production. Wiring points differ slightly from the original PM-41, so make sure you're following the diagram for the board revision you actually have.",
+      "aboutPoints": "On SCPH-101 and SCPH-103 you can ignore the BIOS points entirely. On SCPH-100 and SCPH-102 — which both require the BIOS patch — you'll need to use them.",
+      "tips": [
+        "Cut your wires as short and direct as possible.",
+        "You don't need to connect pins 1 and 2 of the ATtinyX5 chip — just desolder that wire if present.",
+        "Probe around with a multimeter for alternative VCC and GND points closer to where you plan to place the chip, for a cleaner install.",
+        "There may be easier-to-reach alternative points for SQCK and SUBQ than the default ones.",
+        "Be extra careful when soldering SQCK and SUBQ — it's easy to bridge adjacent pins.",
+        "Be careful with the DATA connection — it's easy to accidentally knock the capacitor off the board."
+      ]
+    }
+  },
+  "footer": {
+    "disclaimer": "PSNee is an unofficial, fan-made project shared for educational and archival purposes. This site is independent documentation and is not affiliated with Sony Interactive Entertainment.",
+    "sourceLink": "Source code",
+    "wikiLink": "Full wiki",
+    "license": "Released into the public domain (Unlicense)."
+  }
+}
