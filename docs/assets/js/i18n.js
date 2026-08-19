@@ -108,12 +108,32 @@
   function setLang(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT_LANG;
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
-    loadLang(lang).then(function (dict) {
+    return loadLang(lang).then(function (dict) {
       applyTranslations(dict);
       updateSwitcherUI(lang);
     }).catch(function (err) {
       console.error("PSNee i18n: failed to load language " + lang, err);
     });
+  }
+
+  // On page load, the browser jumps to any #hash in the URL before the
+  // translated text (and images) have finished loading, while the page is
+  // still short/empty — so it lands in the wrong place. Once real content is
+  // in and laid out, re-issue the scroll so it lands on the actual target.
+  function fixHashScroll() {
+    if (!window.location.hash) return;
+    var id = decodeURIComponent(window.location.hash.slice(1));
+    var el = document.getElementById(id);
+    if (!el) return;
+    // Force an instant jump for this correction, regardless of the site's
+    // smooth-scroll CSS — this is fixing an already-wrong position, not
+    // animating a user-initiated navigation, and an animated scrollIntoView
+    // can stall entirely if the tab isn't focused/visible at that instant.
+    var root = document.documentElement;
+    var prevBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    el.scrollIntoView({ block: "start" });
+    root.style.scrollBehavior = prevBehavior;
   }
 
   window.psneeI18n = { setLang: setLang, detectLang: detectLang };
@@ -133,6 +153,11 @@
       });
     }
 
-    setLang(detectLang());
+    setLang(detectLang()).then(function () {
+      requestAnimationFrame(fixHashScroll);
+    });
+    // Images finishing (board/BIOS photos) can also grow the page after the
+    // text-driven fix above already ran — correct once more when they're in.
+    window.addEventListener("load", fixHashScroll);
   });
 })();
